@@ -1,3 +1,4 @@
+from ast import Continue
 import random
 class Username:
     def __init__(self, name, score=0): #making class for players
@@ -10,6 +11,7 @@ class Username:
     def assign_name(self, name): #username
         self.name = name
 
+
 def load_leaderboard(filename="leaderboard.txt"):  #getting the leaderboarder file
     leaderboard = []
     try:
@@ -21,10 +23,12 @@ def load_leaderboard(filename="leaderboard.txt"):  #getting the leaderboarder fi
         pass                #make leaderboard empty if there is no file
     return leaderboard
 
+
 def save_leaderboard(leaderboard, filename="leaderboard.txt"):
     with open(filename, "w") as file:
         for name, score in leaderboard:
             file.write(f"{name},{score}\n")
+
 
 def display_leaderboard(leaderboard):   #defining the leader board so it can be outputed
     print("\nLeaderboard")
@@ -32,20 +36,31 @@ def display_leaderboard(leaderboard):   #defining the leader board so it can be 
     for i, (name, score) in enumerate(sorted_leaderboard, start=1):
         print(f" {name} - {score}")
 
+
 def Guessing():
     leaderboard = load_leaderboard()  #Loading the leaderboard
    
+
+
     name_input = input("Please enter your username: ") #player input for name
     p1 = Username(name_input)
    
+   
+
     while True:
         Guesses = 0  #Reset Guesses amd score after a new round
         Score = 0  
         RandomNumber = random.randint(1, 100)
-        print(f"Hello, {p1.name}! Guess a number between 1 and 100. The lower the score, the better (like golf).")        
+        print ("press L for leaderboard and Press P to play")
+        loop1 = input().strip().upper()
+        if loop1 == 'P' or loop1 == 'p':
+          Continue
+        elif loop1 == 'L' or loop1 =='l':
+          display_leaderboard(leaderboard)
+        print(f"Guess a number between 1 and 100. The lower the score, the better (like golf).")        
         while True:
             try:
-                Guess = int(input("Your guess: "))
+                Guess = int(input())
                 Guesses += 1
                 if Guess > RandomNumber:  #if guess is lower
                     print("Lower")
@@ -69,7 +84,11 @@ def Guessing():
         elif loop == 'N': #stops playing
             print(f"Thanks for playing, {p1.name}! Your final score is {p1.score}")
             display_leaderboard(leaderboard) #display player stats and leaderboard
+            
             break
         else:  #if umput is invalid
             print("Invalid input. Please enter 'Y' or 'N'.")
+
 Guessing()
+
+
