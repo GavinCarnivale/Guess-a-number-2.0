@@ -1,0 +1,75 @@
+import random
+class Username:
+    def __init__(self, name, score=0): #making class for players
+        self.name = name
+        self.score = score
+ 
+    def assign_score(self, score): #player score
+        self.score = score
+ 
+    def assign_name(self, name): #username
+        self.name = name
+
+def load_leaderboard(filename="leaderboard.txt"):  #getting the leaderboarder file
+    leaderboard = []
+    try:
+        with open(filename, "r") as file:
+            for line in file:
+                name, score = line.strip().split(",")
+                leaderboard.append((name, int(score)))
+    except FileNotFoundError:
+        pass                #make leaderboard empty if there is no file
+    return leaderboard
+
+def save_leaderboard(leaderboard, filename="leaderboard.txt"):
+    with open(filename, "w") as file:
+        for name, score in leaderboard:
+            file.write(f"{name},{score}\n")
+
+def display_leaderboard(leaderboard):   #defining the leader board so it can be outputed
+    print("\nLeaderboard")
+    sorted_leaderboard = sorted(leaderboard, key=lambda x: x[1])   #sorting the leader board
+    for i, (name, score) in enumerate(sorted_leaderboard, start=1):
+        print(f" {name} - {score}")
+
+def Guessing():
+    leaderboard = load_leaderboard()  #Loading the leaderboard
+   
+    name_input = input("Please enter your username: ") #player input for name
+    p1 = Username(name_input)
+   
+    while True:
+        Guesses = 0  #Reset Guesses amd score after a new round
+        Score = 0  
+        RandomNumber = random.randint(1, 100)
+        print(f"Hello, {p1.name}! Guess a number between 1 and 100. The lower the score, the better (like golf).")        
+        while True:
+            try:
+                Guess = int(input("Your guess: "))
+                Guesses += 1
+                if Guess > RandomNumber:  #if guess is lower
+                    print("Lower")
+                elif Guess < RandomNumber: #if guess is higher
+                    print("Higher")
+                else:
+                    print(f"You win It took you {Guesses} tries. Your score is {Guesses * 10}.")
+                    p1.assign_score(Guesses * 10)  #givnig the player a score
+                    break
+            except ValueError:
+                print("Please enter a valid number.")
+        print(f"{p1.name}, your final score is: {p1.score}")
+   
+        leaderboard.append((p1.name, p1.score))
+        save_leaderboard(leaderboard)  #add new leader board to file
+       
+        print("Would you like to play again? (Y/N)")
+        loop = input().strip().upper() #checks if input is valid
+        if loop == 'Y': #continues playing
+            continue
+        elif loop == 'N': #stops playing
+            print(f"Thanks for playing, {p1.name}! Your final score is {p1.score}")
+            display_leaderboard(leaderboard) #display player stats and leaderboard
+            break
+        else:  #if umput is invalid
+            print("Invalid input. Please enter 'Y' or 'N'.")
+Guessing()
