@@ -1,1 +1,1 @@
-# Guess-a-number-2.0
+This code works well, the only thing it is missing is main menu which I forgot to add when I worked on it last night. I put in some new things I learn from classmates and from the internt, like "Try","strip" and a couple other things.
