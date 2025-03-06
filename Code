@@ -57,6 +57,8 @@ def Guessing():
           Continue
         elif loop1 == 'L' or loop1 =='l':
           display_leaderboard(leaderboard)
+          print ("press enter to continue to the game")
+          input()
         print(f"Guess a number between 1 and 100. The lower the score, the better (like golf).")        
         while True:
             try:
@@ -90,5 +92,3 @@ def Guessing():
             print("Invalid input. Please enter 'Y' or 'N'.")
 
 Guessing()
-
-
