@@ -1,4 +1,4 @@
-from ast import Continue
+
 import random
 class Username:
     def __init__(self, name, score=0): #making class for players
@@ -12,7 +12,7 @@ class Username:
         self.name = name
 
 
-def load_leaderboard(filename="leaderboard.txt"):  #getting the leaderboarder file
+def load_leaderboard(filename="leaderbard.txt"):  #getting the leaderboarder file
     leaderboard = []
     try:
         with open(filename, "r") as file:
@@ -24,7 +24,7 @@ def load_leaderboard(filename="leaderboard.txt"):  #getting the leaderboarder fi
     return leaderboard
 
 
-def save_leaderboard(leaderboard, filename="leaderboard.txt"):
+def save_leaderboard(leaderboard, filename="leaderbard.txt"):
     with open(filename, "w") as file:
         for name, score in leaderboard:
             file.write(f"{name},{score}\n")
@@ -53,9 +53,9 @@ def Guessing():
         RandomNumber = random.randint(1, 100)
         print ("press L for leaderboard and Press P to play")
         loop1 = input().strip().upper()
-        if loop1 == 'P' or loop1 == 'p':
+        if loop1 == 'P':
           Continue
-        elif loop1 == 'L' or loop1 =='l':
+        elif loop1 == 'L':
           display_leaderboard(leaderboard)
           print ("press enter to continue to the game")
           input()
@@ -64,13 +64,13 @@ def Guessing():
             try:
                 Guess = int(input())
                 Guesses += 1
-                if Guess > RandomNumber:  #if guess is lower
+                if Guess > RandomNumber:  #if guess is higher
                     print("Lower")
-                elif Guess < RandomNumber: #if guess is higher
+                elif Guess < RandomNumber: #if guess is lower
                     print("Higher")
                 else:
                     print(f"You win It took you {Guesses} tries. Your score is {Guesses * 10}.")
-                    p1.assign_score(Guesses * 10)  #givnig the player a score
+                    p1.assign_score(Guesses * 10)  #giving the player a score
                     break
             except ValueError:
                 print("Please enter a valid number.")
